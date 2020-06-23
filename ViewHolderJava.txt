@@ -4,6 +4,8 @@ import android.app.Application;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.extractor.ExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
@@ -22,11 +25,30 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.okhttp.internal.framed.FrameReader;
+import com.squareup.picasso.Picasso;
+
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 public class ViewHolder extends RecyclerView.ViewHolder {
 
     SimpleExoPlayer exoPlayer;
     PlayerView playerView;
+    ImageButton likebutton,commentbtn;
+    TextView likesdisplay;
+    int likescount;
+    DatabaseReference likesref;
+
 
     public ViewHolder(@NonNull View itemView) {
 
@@ -36,6 +58,8 @@ public class ViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View view) {
 
                 mClickListener.onItemClick(view,getAdapterPosition());
+
+
 
             }
         });
@@ -48,16 +72,49 @@ public class ViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
-
-
     }
+
+
+    public void setLikesbuttonStatus(final String postkey){
+        likebutton = itemView.findViewById(R.id.like_btn);
+        likesdisplay = itemView.findViewById(R.id.likes_textview);
+        commentbtn = itemView.findViewById(R.id.comment_activity_open);
+        likesref = FirebaseDatabase.getInstance().getReference("likes");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user.getUid();
+        String likes = "likes";
+
+        likesref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.child(postkey).hasChild(userId)){
+                    likescount = (int)dataSnapshot.child(postkey).getChildrenCount();
+                    likebutton.setImageResource(R.drawable.ic_like);
+                    likesdisplay.setText(Integer.toString(likescount)+likes);
+                }else {
+                    likescount = (int)dataSnapshot.child(postkey).getChildrenCount();
+                    likebutton.setImageResource(R.drawable.ic_dislike);
+                    likesdisplay.setText(Integer.toString(likescount)+likes);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 
     public void setExoplayer(Application application ,String name,String Videourl){
 
         TextView textView = itemView.findViewById(R.id.tv_item_name);
         playerView = itemView.findViewById(R.id.exoplayer_item);
-
         textView.setText(name);
+
+
 
         try {
             BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter.Builder(application).build();
@@ -76,26 +133,23 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         }
 
 
-
-
-
-
     }
      private ViewHolder.Clicklistener mClickListener;
+
     public interface Clicklistener{
         void onItemClick(View view,int position);
         void onItemLongClick(View view ,int position);
+
     }
 
     public void setOnClicklistener(ViewHolder.Clicklistener clicklistener){
         mClickListener = clicklistener;
     }
-
-
-
-
-
 }
+
+
+
+
 
 
 
