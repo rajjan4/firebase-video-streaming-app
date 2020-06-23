@@ -8,9 +8,9 @@
         android:title="Search"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
 
-    <item android:id="@+id/settings_item"
+    <item android:id="@+id/username_item"
         android:icon="@drawable/ic_search"
-        android:title="item"
+        android:title="create profile "
         />
 
 
