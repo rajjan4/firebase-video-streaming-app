@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,22 +8,26 @@
     tools:context=".Fullscreen">
 
 
-    <TextView
-        android:id="@+id/tv_fullscreen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#80000000"
-        android:padding="5dp"
-        android:text="name"
-        android:textColor="@android:color/white"
-        android:textSize="15sp" />
-
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/exoplayer_fullscreen"
         android:layout_width="match_parent"
         android:layout_height="230dp"
         android:layout_below="@+id/tv_fullscreen"
         app:controller_layout_id="@layout/exoplayer_custom_controls"
-        app:resize_mode="fill" />
+        app:resize_mode="fill"
+        tools:ignore="NotSibling">
 
-</LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_fullscreen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#CC000000"
+            android:padding="5dp"
+            android:text="name"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            android:visibility="visible" />
+    </com.google.android.exoplayer2.ui.PlayerView>
+
+</RelativeLayout>
