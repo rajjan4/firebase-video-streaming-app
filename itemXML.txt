@@ -12,23 +12,64 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Name"
-        android:id="@+id/tv_item_name"
-        android:textSize="20dp"
-        android:textColor="@android:color/black"
-        />
 
-    <com.google.android.exoplayer2.ui.PlayerView
+        <TextView
+            android:id="@+id/tv_item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="Name"
+            android:textColor="@android:color/black"
+            android:textSize="20dp"/>
+
+        <com.google.android.exoplayer2.ui.PlayerView
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="200dp"
         android:id="@+id/exoplayer_item"
         android:layout_margin="3dp"
-        app:use_controller="true"
+            app:use_controller="true"
+            app:resize_mode="fill">
 
-        app:resize_mode="fill"
-        />
+        </com.google.android.exoplayer2.ui.PlayerView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+           >
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_dislike"
+                android:padding="9dp"
+                android:background="@android:color/transparent"
+                android:id="@+id/like_btn"
+
+               />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:textColor="@android:color/black"
+                android:hint="likes"
+                android:id="@+id/likes_textview"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_comment_black_24dp"
+                android:background="@android:color/transparent"
+                android:id="@+id/comment_activity_open"
+                android:layout_marginLeft="50dp"
+                android:padding="5dp"/>
+
+
+
+        </LinearLayout>
+
+
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>
