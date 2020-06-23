@@ -42,11 +42,11 @@ public class Fullscreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Fullscreen");
+        //   ActionBar actionBar = getSupportActionBar();
+         //  actionBar.setTitle("Fullscreen");
 
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+       //   actionBar.setDisplayHomeAsUpEnabled(true);
+        //  actionBar.setDisplayShowHomeEnabled(true);
 
 
 
@@ -74,11 +74,12 @@ public class Fullscreen extends AppCompatActivity {
                         getSupportActionBar().show();
                     }
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)playerView.getLayoutParams();
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)playerView.getLayoutParams();
                     params.width = params.MATCH_PARENT;
                     params.height = (int) (200 * getApplicationContext().getResources().getDisplayMetrics().density);
                     playerView.setLayoutParams(params);
                     fullscreen = false;
+                    textView.setVisibility(View.VISIBLE);
                 }else {
                     fullscreenButton.setImageDrawable(ContextCompat.getDrawable(Fullscreen.this,R.drawable.ic_fullscreen_skrink));
                     getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -88,12 +89,12 @@ public class Fullscreen extends AppCompatActivity {
                         getSupportActionBar().hide();
                     }
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)playerView.getLayoutParams();
+                  RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)playerView.getLayoutParams();
                     params.width = params.MATCH_PARENT;
                     params.height = params.MATCH_PARENT;
                     playerView.setLayoutParams(params);
                     fullscreen = true;
-
+                    textView.setVisibility(View.INVISIBLE);
 
                 }
             }
@@ -116,6 +117,7 @@ public class Fullscreen extends AppCompatActivity {
         player.setPlayWhenReady(playwhenready);
         player.seekTo(currentWindow,playbackposition);
         player.prepare(mediaSource,false,false);
+
     }
 
     @Override
@@ -124,6 +126,7 @@ public class Fullscreen extends AppCompatActivity {
 
         if (Util.SDK_INT >= 26 ){
             initializeplayer();
+         //   textView.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -133,6 +136,7 @@ public class Fullscreen extends AppCompatActivity {
 
         if (Util.SDK_INT >= 26 || player == null ){
           //  initializeplayer();
+
         }
     }
 
@@ -142,6 +146,8 @@ public class Fullscreen extends AppCompatActivity {
 
         if (Util.SDK_INT > 26 ){
             releasePlayer();
+
+
         }
 
     }
@@ -161,10 +167,11 @@ public class Fullscreen extends AppCompatActivity {
             playbackposition = player.getCurrentPosition();
             currentWindow = player.getCurrentWindowIndex();
             player = null;
+
         }
     }
 
- @Override
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
 
