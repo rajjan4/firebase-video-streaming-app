@@ -1,2 +1,5 @@
- <activity android:name=".Fullscreen"
-            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+<activity
+            android:name=".Fullscreen"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/Theme.Design.NoActionBar" />
+            
