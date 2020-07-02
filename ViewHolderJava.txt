@@ -44,7 +44,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
     SimpleExoPlayer exoPlayer;
     PlayerView playerView;
-    ImageButton likebutton,commentbtn;
+    ImageButton likebutton,commentbtn,downloadbtn;
     TextView likesdisplay;
     int likescount;
     DatabaseReference likesref;
@@ -78,6 +78,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     public void setLikesbuttonStatus(final String postkey){
         likebutton = itemView.findViewById(R.id.like_btn);
         likesdisplay = itemView.findViewById(R.id.likes_textview);
+
         commentbtn = itemView.findViewById(R.id.comment_activity_open);
         likesref = FirebaseDatabase.getInstance().getReference("likes");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -112,6 +113,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView textView = itemView.findViewById(R.id.tv_item_name);
         playerView = itemView.findViewById(R.id.exoplayer_item);
+        downloadbtn = itemView.findViewById(R.id.download_button_viewholder);
         textView.setText(name);
 
 
